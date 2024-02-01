@@ -1,0 +1,311 @@
+Country,Station_id,Missing,Reason
+USA,02342933,iv,No Instantaneous Values of discharge available
+USA,02464360,iv,No Instantaneous Values of discharge available
+USA,11230500,iv,No Instantaneous Values of discharge available
+USA,11237500,iv,No Instantaneous Values of discharge available
+CAN,01AD002,iv,No real-time discharge observations available
+CAN,01AE001,iv,No real-time discharge observations available
+CAN,01BD008,iv,No real-time discharge observations available
+CAN,01BG005,iv,No real-time discharge observations available
+CAN,01BG008,iv,No real-time discharge observations available
+CAN,01BG009,iv,No real-time discharge observations available
+CAN,01BH005,iv,No real-time discharge observations available
+CAN,01BH010,iv,No real-time discharge observations available
+CAN,02BF005,iv,No real-time discharge observations available
+CAN,02BF006,iv,No real-time discharge observations available
+CAN,02BF007,iv,No real-time discharge observations available
+CAN,02BF008,iv,No real-time discharge observations available
+CAN,02BF009,iv,No real-time discharge observations available
+CAN,02BF012,iv,No real-time discharge observations available
+CAN,02BF013,iv,No real-time discharge observations available
+CAN,02DB007,iv,No real-time discharge observations available
+CAN,02ED014,iv,No real-time discharge observations available
+CAN,02FD001,iv,No real-time discharge observations available
+CAN,02FF004,iv,No real-time discharge observations available
+CAN,02GB007,iv,No real-time discharge observations available
+CAN,02GH003,iv,No real-time discharge observations available
+CAN,02HG001,iv,No real-time discharge observations available
+CAN,02JB013,iv,No real-time discharge observations available
+CAN,02LB017,iv,No real-time discharge observations available
+CAN,02LC027,iv,No real-time discharge observations available
+CAN,02LC043,iv,No real-time discharge observations available
+CAN,02LD005,iv,No real-time discharge observations available
+CAN,02LG005,iv,No real-time discharge observations available
+CAN,02NE011,iv,No real-time discharge observations available
+CAN,02NF003,iv,No real-time discharge observations available
+CAN,02OA057,iv,No real-time discharge observations available
+CAN,02OB032,iv,No real-time discharge observations available
+CAN,02OB037,iv,No real-time discharge observations available
+CAN,02OD003,iv,No real-time discharge observations available
+CAN,02OE027,iv,No real-time discharge observations available
+CAN,02OE032,iv,No real-time discharge observations available
+CAN,02OG026,iv,No real-time discharge observations available
+CAN,02OJ024,iv,No real-time discharge observations available
+CAN,02OJ026,iv,No real-time discharge observations available
+CAN,02PA007,iv,No real-time discharge observations available
+CAN,02PB006,iv,No real-time discharge observations available
+CAN,02PC018,iv,No real-time discharge observations available
+CAN,02PC019,iv,No real-time discharge observations available
+CAN,02PD002,iv,No real-time discharge observations available
+CAN,02PD004,iv,No real-time discharge observations available
+CAN,02PD012,iv,No real-time discharge observations available
+CAN,02PD013,iv,No real-time discharge observations available
+CAN,02PD014,iv,No real-time discharge observations available
+CAN,02PD015,iv,No real-time discharge observations available
+CAN,02PE014,iv,No real-time discharge observations available
+CAN,02PG006,iv,No real-time discharge observations available
+CAN,02PG022,iv,No real-time discharge observations available
+CAN,02PJ007,iv,No real-time discharge observations available
+CAN,02PJ030,iv,No real-time discharge observations available
+CAN,02PL005,iv,No real-time discharge observations available
+CAN,02QA002,iv,No real-time discharge observations available
+CAN,02QC009,iv,No real-time discharge observations available
+CAN,02RC011,iv,No real-time discharge observations available
+CAN,02RD003,iv,No real-time discharge observations available
+CAN,02RF001,iv,No real-time discharge observations available
+CAN,02RF009,iv,No real-time discharge observations available
+CAN,02RG005,iv,No real-time discharge observations available
+CAN,02RH027,iv,No real-time discharge observations available
+CAN,02RH035,iv,No real-time discharge observations available
+CAN,02RH045,iv,No real-time discharge observations available
+CAN,02UA003,iv,No real-time discharge observations available
+CAN,02UC002,iv,No real-time discharge observations available
+CAN,02VB004,iv,No real-time discharge observations available
+CAN,02WB003,iv,No real-time discharge observations available
+CAN,02XC001,iv,No real-time discharge observations available
+CAN,02YL011,iv,No real-time discharge observations available
+CAN,02ZK003,iv,No real-time discharge observations available
+CAN,03AB002,iv,No real-time discharge observations available
+CAN,03AC004,iv,No real-time discharge observations available
+CAN,03BD002,iv,No real-time discharge observations available
+CAN,03BF001,iv,No real-time discharge observations available
+CAN,03ED001,iv,No real-time discharge observations available
+CAN,03FA003,iv,No real-time discharge observations available
+CAN,03KC004,iv,No real-time discharge observations available
+CAN,03MB002,iv,No real-time discharge observations available
+CAN,03MD001,iv,No real-time discharge observations available
+CAN,03OC003,iv,No real-time discharge observations available
+CAN,03OE010,iv,No real-time discharge observations available
+CAN,04NA001,iv,No real-time discharge observations available
+CAN,05AA909,iv,No real-time discharge observations available
+CAN,05AB013,iv,No real-time discharge observations available
+CAN,05DA010,iv,No real-time discharge observations available
+CAN,05DC006,iv,No real-time discharge observations available
+CAN,05DC012,iv,No real-time discharge observations available
+CAN,05EB902,iv,No real-time discharge observations available
+CAN,05EC002,iv,No real-time discharge observations available
+CAN,05EF004,iv,No real-time discharge observations available
+CAN,05EF005,iv,No real-time discharge observations available
+CAN,05EF006,iv,No real-time discharge observations available
+CAN,05EG004,iv,No real-time discharge observations available
+CAN,05FF003,iv,No real-time discharge observations available
+CAN,05GB004,iv,No real-time discharge observations available
+CAN,05GC007,iv,No real-time discharge observations available
+CAN,05GD002,iv,No real-time discharge observations available
+CAN,05GF001,iv,No real-time discharge observations available
+CAN,05GF002,iv,No real-time discharge observations available
+CAN,05GG010,iv,No real-time discharge observations available
+CAN,05HA015,iv,No real-time discharge observations available
+CAN,05HE001,iv,No real-time discharge observations available
+CAN,05HH002,iv,No real-time discharge observations available
+CAN,05HH003,iv,No real-time discharge observations available
+CAN,05JC007,iv,No real-time discharge observations available
+CAN,05JF014,iv,No real-time discharge observations available
+CAN,05JG001,iv,No real-time discharge observations available
+CAN,05JH005,iv,No real-time discharge observations available
+CAN,05JK008,iv,No real-time discharge observations available
+CAN,05KB003,iv,No real-time discharge observations available
+CAN,05KB006,iv,No real-time discharge observations available
+CAN,05KB011,iv,No real-time discharge observations available
+CAN,05KC001,iv,No real-time discharge observations available
+CAN,05KE005,iv,No real-time discharge observations available
+CAN,05KE007,iv,No real-time discharge observations available
+CAN,05KF001,iv,No real-time discharge observations available
+CAN,05KG007,iv,No real-time discharge observations available
+CAN,05KJ014,iv,No real-time discharge observations available
+CAN,05LA003,iv,No real-time discharge observations available
+CAN,05LB004,iv,No real-time discharge observations available
+CAN,05LB006,iv,No real-time discharge observations available
+CAN,05LB008,iv,No real-time discharge observations available
+CAN,05LB010,iv,No real-time discharge observations available
+CAN,05LD003,iv,No real-time discharge observations available
+CAN,05LE008,iv,No real-time discharge observations available
+CAN,05LE011,iv,No real-time discharge observations available
+CAN,05MC002,iv,No real-time discharge observations available
+CAN,05RE002,iv,No real-time discharge observations available
+CAN,05SD003,iv,No real-time discharge observations available
+CAN,05UA003,iv,No real-time discharge observations available
+CAN,06AD001,iv,No real-time discharge observations available
+CAN,06AD008,iv,No real-time discharge observations available
+CAN,06AD010,iv,No real-time discharge observations available
+CAN,06AD011,iv,No real-time discharge observations available
+CAN,06AG001,iv,No real-time discharge observations available
+CAN,06DA001,iv,No real-time discharge observations available
+CAN,06LA001,iv,No real-time discharge observations available
+CAN,07BJ006,iv,No real-time discharge observations available
+CAN,07CA003,iv,No real-time discharge observations available
+CAN,07GC002,iv,No real-time discharge observations available
+CAN,07HB001,iv,No real-time discharge observations available
+CAN,07QD002,iv,No real-time discharge observations available
+CAN,07SB017,iv,No real-time discharge observations available
+CAN,08AA007,iv,No real-time discharge observations available
+CAN,08BB005,iv,No real-time discharge observations available
+CAN,08CF003,iv,No real-time discharge observations available
+CAN,08DB014,iv,No real-time discharge observations available
+CAN,08EB004,iv,No real-time discharge observations available
+CAN,08EE025,iv,No real-time discharge observations available
+CAN,08HD015,iv,No real-time discharge observations available
+CAN,08JA015,iv,No real-time discharge observations available
+CAN,08KH011,iv,No real-time discharge observations available
+CAN,08LB069,iv,No real-time discharge observations available
+CAN,08LD003,iv,No real-time discharge observations available
+CAN,08LF023,iv,No real-time discharge observations available
+CAN,08MB005,iv,No real-time discharge observations available
+CAN,08MG020,iv,No real-time discharge observations available
+CAN,08MG022,iv,No real-time discharge observations available
+CAN,08MH016,iv,No real-time discharge observations available
+CAN,08NE077,iv,No real-time discharge observations available
+CAN,08NH006,iv,No real-time discharge observations available
+CAN,08NH032,iv,No real-time discharge observations available
+CAN,08NH120,iv,No real-time discharge observations available
+CAN,08NH130,iv,No real-time discharge observations available
+CAN,08NK026,iv,No real-time discharge observations available
+CAN,08NM142,iv,No real-time discharge observations available
+CAN,08NM173,iv,No real-time discharge observations available
+CAN,08NN012,iv,No real-time discharge observations available
+CAN,08NN013,iv,No real-time discharge observations available
+CAN,08NP001,iv,No real-time discharge observations available
+CAN,08NP004,iv,No real-time discharge observations available
+CAN,09AA004,iv,No real-time discharge observations available
+CAN,09AE002,iv,No real-time discharge observations available
+CAN,09ED001,iv,No real-time discharge observations available
+CAN,11AA032,iv,No real-time discharge observations available
+CAN,11AE008,iv,No real-time discharge observations available
+CAN,11AE009,iv,No real-time discharge observations available
+CAN,11AE014,iv,No real-time discharge observations available
+CAN,05RE002,dv,No discharge values available (only water levels)
+CAN,06DA001,dv,No discharge values available (only water levels)
+CAN,07BJ006,dv,No discharge values available (only water levels)
+CAN,07QD002,dv,No discharge values available (only water levels)
+CAN,07SB017,dv,No discharge values available (only water levels)
+CAN,08AA007,dv,No discharge values available (only water levels)
+CAN,08KH011,dv,No discharge values available (only water levels)
+CAN,08LD003,dv,No discharge values available (only water levels)
+CAN,08LF023,dv,No discharge values available (only water levels)
+CAN,08MG020,dv,No discharge values available (only water levels)
+CAN,08MG022,dv,No discharge values available (only water levels)
+CAN,09AA004,dv,No discharge values available (only water levels)
+CAN,09AE002,dv,No discharge values available (only water levels)
+CAN,01AD002,n/a,Desire to limit disk space requirements
+CAN,02RF001,n/a,Desire to limit disk space requirements
+CAN,02UC002,n/a,Desire to limit disk space requirements
+CAN,02WB003,n/a,Desire to limit disk space requirements
+CAN,03AB002,n/a,Desire to limit disk space requirements
+CAN,03AC004,n/a,Desire to limit disk space requirements
+CAN,03ED001,n/a,Desire to limit disk space requirements
+CAN,03KC004,n/a,Desire to limit disk space requirements
+CAN,03MB002,n/a,Desire to limit disk space requirements
+CAN,03MD001,n/a,Desire to limit disk space requirements
+CAN,03OC003,n/a,Desire to limit disk space requirements
+CAN,03QC001,n/a,Desire to limit disk space requirements
+CAN,04AB001,n/a,Desire to limit disk space requirements
+CAN,04AD002,n/a,Desire to limit disk space requirements
+CAN,04CA002,n/a,Desire to limit disk space requirements
+CAN,04CB001,n/a,Desire to limit disk space requirements
+CAN,04DC001,n/a,Desire to limit disk space requirements
+CAN,04FB001,n/a,Desire to limit disk space requirements
+CAN,04FC001,n/a,Desire to limit disk space requirements
+CAN,04GB004,n/a,Desire to limit disk space requirements
+CAN,04LM001,n/a,Desire to limit disk space requirements
+CAN,05KG007,n/a,Desire to limit disk space requirements
+CAN,05KH007,n/a,Desire to limit disk space requirements
+CAN,05LC001,n/a,Desire to limit disk space requirements
+CAN,05LH005,n/a,Desire to limit disk space requirements
+CAN,05TD001,n/a,Desire to limit disk space requirements
+CAN,06AD001,n/a,Desire to limit disk space requirements
+CAN,06AD006,n/a,Desire to limit disk space requirements
+CAN,06AG001,n/a,Desire to limit disk space requirements
+CAN,06BB003,n/a,Desire to limit disk space requirements
+CAN,06CD002,n/a,Desire to limit disk space requirements
+CAN,06DA001,n/a,Desire to limit disk space requirements
+CAN,06DA002,n/a,Desire to limit disk space requirements
+CAN,06DC001,n/a,Desire to limit disk space requirements
+CAN,06GD001,n/a,Desire to limit disk space requirements
+CAN,06HB002,n/a,Desire to limit disk space requirements
+CAN,06JC002,n/a,Desire to limit disk space requirements
+CAN,06KC003,n/a,Desire to limit disk space requirements
+CAN,06LA001,n/a,Desire to limit disk space requirements
+CAN,06LC001,n/a,Desire to limit disk space requirements
+CAN,06MA006,n/a,Desire to limit disk space requirements
+CAN,07BJ006,n/a,Desire to limit disk space requirements
+CAN,07BK001,n/a,Desire to limit disk space requirements
+CAN,07CD001,n/a,Desire to limit disk space requirements
+CAN,07CD005,n/a,Desire to limit disk space requirements
+CAN,07EA005,n/a,Desire to limit disk space requirements
+CAN,07FB001,n/a,Desire to limit disk space requirements
+CAN,07FC001,n/a,Desire to limit disk space requirements
+CAN,07GE001,n/a,Desire to limit disk space requirements
+CAN,07GH002,n/a,Desire to limit disk space requirements
+CAN,07GJ001,n/a,Desire to limit disk space requirements
+CAN,07JD002,n/a,Desire to limit disk space requirements
+CAN,07KE001,n/a,Desire to limit disk space requirements
+CAN,07LE002,n/a,Desire to limit disk space requirements
+CAN,07OB001,n/a,Desire to limit disk space requirements
+CAN,07OB003,n/a,Desire to limit disk space requirements
+CAN,07OC001,n/a,Desire to limit disk space requirements
+CAN,07QD002,n/a,Desire to limit disk space requirements
+CAN,07RD001,n/a,Desire to limit disk space requirements
+CAN,07SA002,n/a,Desire to limit disk space requirements
+CAN,07TA001,n/a,Desire to limit disk space requirements
+CAN,08BB005,n/a,Desire to limit disk space requirements
+CAN,08CE001,n/a,Desire to limit disk space requirements
+CAN,08CF003,n/a,Desire to limit disk space requirements
+CAN,08DB001,n/a,Desire to limit disk space requirements
+CAN,08EB005,n/a,Desire to limit disk space requirements
+CAN,08EF001,n/a,Desire to limit disk space requirements
+CAN,08JE001,n/a,Desire to limit disk space requirements
+CAN,08KA004,n/a,Desire to limit disk space requirements
+CAN,08KB001,n/a,Desire to limit disk space requirements
+CAN,08KG001,n/a,Desire to limit disk space requirements
+CAN,08KH006,n/a,Desire to limit disk space requirements
+CAN,08LA001,n/a,Desire to limit disk space requirements
+CAN,08LB064,n/a,Desire to limit disk space requirements
+CAN,08LE031,n/a,Desire to limit disk space requirements
+CAN,08LF023,n/a,Desire to limit disk space requirements
+CAN,08MB005,n/a,Desire to limit disk space requirements
+CAN,08NG065,n/a,Desire to limit disk space requirements
+CAN,08NN012,n/a,Desire to limit disk space requirements
+CAN,09AE002,n/a,Desire to limit disk space requirements
+CAN,09BC001,n/a,Desire to limit disk space requirements
+CAN,09BC004,n/a,Desire to limit disk space requirements
+CAN,09CD001,n/a,Desire to limit disk space requirements
+CAN,09DD003,n/a,Desire to limit disk space requirements
+CAN,09ED001,n/a,Desire to limit disk space requirements
+CAN,09FC001,n/a,Desire to limit disk space requirements
+CAN,09FD002,n/a,Desire to limit disk space requirements
+CAN,10AA001,n/a,Desire to limit disk space requirements
+CAN,10AB001,n/a,Desire to limit disk space requirements
+CAN,10BE001,n/a,Desire to limit disk space requirements
+CAN,10CD001,n/a,Desire to limit disk space requirements
+CAN,10EB001,n/a,Desire to limit disk space requirements
+CAN,10ED001,n/a,Desire to limit disk space requirements
+CAN,10ED002,n/a,Desire to limit disk space requirements
+CAN,10GB006,n/a,Desire to limit disk space requirements
+CAN,10JA002,n/a,Desire to limit disk space requirements
+CAN,10JC003,n/a,Desire to limit disk space requirements
+CAN,10LA002,n/a,Desire to limit disk space requirements
+CAN,10MA001,n/a,Desire to limit disk space requirements
+CAN,10MC002,n/a,Desire to limit disk space requirements
+CAN,10NC001,n/a,Desire to limit disk space requirements
+CAN,10PB001,n/a,Desire to limit disk space requirements
+CAN,10PC004,n/a,Desire to limit disk space requirements
+CAN,10QC001,n/a,Desire to limit disk space requirements
+CAN,10QD001,n/a,Desire to limit disk space requirements
+CAN,10RA001,n/a,Desire to limit disk space requirements
+CAN,10RA002,n/a,Desire to limit disk space requirements
+CAN,10RC001,n/a,Desire to limit disk space requirements
+USA,06354000,n/a,Desire to limit disk space requirements
+USA,06360500,n/a,Desire to limit disk space requirements
+USA,06447000,n/a,Desire to limit disk space requirements
+USA,06452000,n/a,Desire to limit disk space requirements
+USA,13340000,n/a,Desire to limit disk space requirements

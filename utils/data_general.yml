@@ -1,0 +1,36 @@
+countries:
+  - CAN
+  - USA
+
+camels_spat_metadata: camels_spat_metadata.csv
+camels_spat_unusable: camels_spat_unusable.csv
+
+data_sources:
+  - EM-Earth
+  - ERA5
+
+
+
+input_vars:
+  - prcp
+  - tmean
+  - mtpr
+  - msdwswrf
+  - msdwlwrf
+  - msnswrf
+  - msnlwrf
+  - mper
+  - t
+  - u
+  - v
+  - q
+  - sp
+  - e
+  - rh
+  - w
+  - phi
+
+output_vars:
+  # - scalarSurfaceRunoff
+  # - scalarTotalRunoff
+  - averageRoutedRunoff

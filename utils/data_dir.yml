@@ -1,0 +1,10 @@
+data_dir_camels_spat: ../../../../../../project/gwf/gwf_cmt/wknoben/camels_spat/camels-spat-data
+
+countries:
+  - CAN
+  - USA
+
+camels_spat_metadata: camels_spat_metadata.csv
+camels_spat_unusable: camels_spat_unusable.csv
+
+data_dir_camels_spat_nh: ../CAMELS-SPAT
