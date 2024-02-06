@@ -6,10 +6,8 @@ camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv
 
 data_sources:
-  - EM-Earth
   - ERA5
-
-
+  - EM-Earth
 
 input_vars:
   - prcp
@@ -31,6 +29,9 @@ input_vars:
   - phi
 
 output_vars:
-  # - scalarSurfaceRunoff
-  # - scalarTotalRunoff
-  - averageRoutedRunoff
+  - q_obs
+
+sum_vars:
+  - prcp
+  - mtpr
+  - q_obs

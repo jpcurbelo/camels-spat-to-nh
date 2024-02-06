@@ -1,4 +1,7 @@
-data_dir_camels_spat: ../../../../../../project/gwf/gwf_cmt/wknoben/camels_spat/camels-spat-data
+# data_dir_camels_spat: ../../../../../../project/gwf/gwf_cmt/wknoben/camels_spat/camels-spat-data
+data_dir_camels_spat: ../../../gladwell/hydrology/CAMELS_spat_sample
+relative_path_forcing: forcing/lumped
+relative_path_target: observations
 
 countries:
   - CAN
@@ -7,4 +10,4 @@ countries:
 camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv
 
-data_dir_camels_spat_nh: ../CAMELS-SPAT
+data_dir_camels_spat_nh: ../../../gladwell/hydrology/SUMMA/summa-ml-models/CAMELS_spat_NH

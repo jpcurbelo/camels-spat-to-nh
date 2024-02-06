@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+venv-camels-spat/
 
 # Spyder project settings
 .spyderproject
