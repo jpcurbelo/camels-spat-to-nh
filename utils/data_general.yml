@@ -28,8 +28,13 @@ input_vars:
   - w
   - phi
 
-output_vars:
+target_vars:
   - q_obs
+  # - q_obs_is_ice_affected
+  # - q_obs_is_partial_day
+  # - q_obs_is_dry_day
+  # - q_obs_is_estimated_value
+
 
 sum_vars:
   - prcp
