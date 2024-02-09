@@ -53,7 +53,7 @@ def camels_spat2nh(data_dir, data_gen):
         basin_data_path_dict[country] = [basin for basin in list_basin_files if basin[:3] == country]
     
     ## Process data for each basin and save to csv file
-    for country in countries:
+    for country in countries[1:]:
         # Create a folder for each country
         country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}')
         if not os.path.exists(country_dir ):
@@ -79,14 +79,13 @@ def camels_spat2nh(data_dir, data_gen):
             for future in concurrent.futures.as_completed(futures):
                 _ = future.result()  # Get the result if needed
                     
-
 def processBasinSave2CSV(basin_f, basin_data_path, country_dir, 
                          relative_path_forc, relative_path_targ, 
                          data_sources, data_gen):
             
     csv_file_name = os.path.join(country_dir, basin_f + '.csv')
-    if os.path.exists(csv_file_name):
-    # if 5>10:
+    # if os.path.exists(csv_file_name):
+    if 5>10:
         print(f"File {csv_file_name} already exists")
     
     else:
@@ -100,7 +99,7 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
             # Initialize an empty list to store the xarray datasets
             datasets = []
             # Iterate over the files and load each dataset
-            for file2load in eras_files:
+            for file2load in eras_files[:]:
                 
                 # If not .temp file
                 if '.tmp' not in file2load:
@@ -146,6 +145,7 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
         df_merged = df_merged_inp.merge(df_target, on='date')
         
         # Save to file
+        print("Saving to file...")
         df_merged.to_csv(os.path.join(country_dir, basin_f + '.csv'), index=False)
 
 
