@@ -8,7 +8,7 @@ import time
 from functools import partial
 import concurrent.futures
 
-from utils.utils import reduceDataByDay, load_util_data
+from utils.utils import reduceDataByDay, load_util_data, get_unusable_basins
 
 # Get the current working directory of the notebook
 current_dir = os.getcwd()
@@ -17,12 +17,10 @@ current_dir = os.getcwd()
 ROOT_DIR = os.path.abspath(current_dir)
 sys.path.append(ROOT_DIR)
 
-MULTIPROCESSING = False
+MULTIPROCESSING = True
 
 
-
-
-def camels_spat2nh(data_dir, data_gen):
+def camels_spat2nh(data_dir, data_gen, unusuable_basins):
 
     # **Load Data**
     ## Dirs data
@@ -62,7 +60,7 @@ def camels_spat2nh(data_dir, data_gen):
                 partial_process = partial(processBasinSave2CSV, basin_data_path=basin_data_path, 
                                     country_dir=country_dir, relative_path_forc=relative_path_forc,
                                     relative_path_targ=relative_path_targ, data_sources=data_sources, 
-                                    data_gen=data_gen)
+                                    data_gen=data_gen, unusuable_basins=unusuable_basins)
 
                 # Process each basin concurrently
                 futures = [executor.submit(partial_process, basin_f) for basin_f in basin_data_path_dict[country]]
@@ -73,36 +71,27 @@ def camels_spat2nh(data_dir, data_gen):
         else:
             for basin_f in basin_data_path_dict[country]:
                 processBasinSave2CSV(basin_f, basin_data_path, country_dir, relative_path_forc, 
-                                     relative_path_targ, data_sources, data_gen)
+                                     relative_path_targ, data_sources, data_gen, unusuable_basins)
                                   
 def processBasinSave2CSV(basin_f, basin_data_path, country_dir, 
                          relative_path_forc, relative_path_targ, 
-                         data_sources, data_gen):
+                         data_sources, data_gen, unusuable_basins):
             
     csv_file_name = os.path.join(country_dir, basin_f + '.csv')
     if os.path.exists(csv_file_name):
     # if 5>10:
         print(f"File {csv_file_name} already exists")
-    # elif basin_f == 'CAN_05RE002' \
-    #         or basin_f == 'CAN_06DA001' \
-    #         or basin_f == 'CAN_07BJ006' \
-    #         or basin_f == 'CAN_07QD002' :
-    #     print(f"Skipping basin {basin_f} - no data available")
+        if basin_f[4:] in unusuable_basins:
+            # Delete file
+            os.remove(csv_file_name)   
+    elif basin_f[4:] in unusuable_basins:
+        print(f"Skipping basin {basin_f} - unusable basin")
     else:
         print('\n', basin_f)
         df_src_dict = {}
-        flag_data = True
         for src in data_sources:
             folder2load = os.path.join(basin_data_path, basin_f, relative_path_forc)
             eras_files = sorted([f for f in os.listdir(folder2load) if src in f])
-            
-            print(f"Loading {src} data for {basin_f}...")
-            
-            # Check if there are files to load
-            if len(eras_files) == 0:
-                print(f"No files found for {src} in {folder2load}")
-                flag_data = False
-                break
             
             # Initialize an empty list to store the xarray datasets
             datasets = []
@@ -112,8 +101,8 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
                 # If not .temp file
                 if '.tmp' not in file2load:
                     
-                    # sys.stdout.write(f'\r>> {file2load}')
-                    # sys.stdout.flush()
+                    sys.stdout.write(f'\r>> {file2load}')
+                    sys.stdout.flush()
                     
                     basin_data = xr.open_dataset(os.path.join(folder2load, file2load))
                     datasets.append(basin_data)
@@ -130,32 +119,31 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
             # Save to dict
             df_src_dict[src] = basin_data_df
                   
-        if flag_data:
-            # Merge dataframes in the dictionary
-            df_merged_inp = df_src_dict[data_sources[0]].merge(df_src_dict[data_sources[1]], on='time')
-            
-            # Rename time by date
-            df_merged_inp.rename(columns={'time': 'date'}, inplace=True)
-            
-            ## Load target data
-            target_data = xr.open_dataset(os.path.join(basin_data_path, basin_f, relative_path_targ, 
-                                                    f'{basin_f}_daily_flow_observations.nc'))
-            
-            # Subset by data_gen['target_vars']
-            target_data = target_data[data_gen['target_vars']]
-            # Convert to DataFrame
-            df_target = target_data.to_dataframe().reset_index()
-            # Rename time by date
-            df_target.rename(columns={'time': 'date'}, inplace=True)
-            # Remove duplicates
-            df_target = df_target.drop_duplicates(subset=['date'])
-            
-            # Merge input and target dataframes
-            df_merged = df_merged_inp.merge(df_target, on='date')
-            
-            # Save to file
-            print("Saving to file...")
-            df_merged.to_csv(os.path.join(country_dir, basin_f + '.csv'), index=False)
+        # Merge dataframes in the dictionary
+        df_merged_inp = df_src_dict[data_sources[0]].merge(df_src_dict[data_sources[1]], on='time')
+        
+        # Rename time by date
+        df_merged_inp.rename(columns={'time': 'date'}, inplace=True)
+        
+        ## Load target data
+        target_data = xr.open_dataset(os.path.join(basin_data_path, basin_f, relative_path_targ, 
+                                                f'{basin_f}_daily_flow_observations.nc'))
+        
+        # Subset by data_gen['target_vars']
+        target_data = target_data[data_gen['target_vars']]
+        # Convert to DataFrame
+        df_target = target_data.to_dataframe().reset_index()
+        # Rename time by date
+        df_target.rename(columns={'time': 'date'}, inplace=True)
+        # Remove duplicates
+        df_target = df_target.drop_duplicates(subset=['date'])
+        
+        # Merge input and target dataframes
+        df_merged = df_merged_inp.merge(df_target, on='date')
+        
+        # Save to file
+        print("Saving to file...")
+        df_merged.to_csv(os.path.join(country_dir, basin_f + '.csv'), index=False)
 
 
 if __name__ == '__main__':
@@ -165,11 +153,11 @@ if __name__ == '__main__':
     data_dir, data_gen = load_util_data(ROOT_DIR)
     
     # Load Unusable basins
-    # unusable_basins = pd.read_csv(os.path.join(data_dir['data_dir_camels_spat'], 'unusable_basins.csv'))
+    unusuable_basins = get_unusable_basins(data_dir['data_dir_camels_spat_nh'], data_gen['camels_spat_unusable'])
 
-    # ## Let's profile the loop
-    # start_time = time.time()
-    # camels_spat2nh(data_dir, data_gen)
-    # ## End of process
-    # print('\n', f"--- {(time.time() - start_time):.2f} seconds ---")
+    ## Let's profile the loop
+    start_time = time.time()
+    camels_spat2nh(data_dir, data_gen, unusuable_basins)
+    ## End of process
+    print('\n', f"--- {(time.time() - start_time):.2f} seconds ---")
     
