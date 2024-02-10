@@ -1,9 +1,10 @@
 countries:
   - CAN
   - USA
-
+  
 camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv
+camels_spat_dates_stats: camels_spat_1426_dates_stats.csv
 
 data_sources:
   - ERA5
