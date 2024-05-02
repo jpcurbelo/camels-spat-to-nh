@@ -32,6 +32,10 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
     basin_data_path = os.path.join(data_dir_src, 'basin_data')
     list_basin_files = sorted(os.listdir(basin_data_path))
     
+    print(list_basin_files)
+    
+    aux = input("Press Enter to continue...")
+    
     ## General data
     countries = data_gen['countries']
     data_sources = data_gen['data_sources']
@@ -96,7 +100,7 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
             # Initialize an empty list to store the xarray datasets
             datasets = []
             # Iterate over the files and load each dataset
-            for file2load in eras_files[:]:
+            for file2load in eras_files[:5]:
                 
                 # If not .temp file
                 if '.tmp' not in file2load:

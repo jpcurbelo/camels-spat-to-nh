@@ -3,6 +3,7 @@ import yaml
 import xarray as xr
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 
 
 def reduceDataByDay(dataset, set_vars, sum_vars):
@@ -29,7 +30,12 @@ def reduceDataByDay(dataset, set_vars, sum_vars):
         elif variable in set_vars:
             # print('mean', variable)
             daily_data[variable] = dataset[variable].groupby(day_dates).mean(dim="time")
-
+        
+        # Add max and min temperature
+        if variable == 'tmean' or variable == 't':
+            daily_data[f'{variable}_max'] = dataset[variable].groupby(day_dates).max(dim="time")
+            daily_data[f'{variable}_min'] = dataset[variable].groupby(day_dates).min(dim="time")
+            
     return daily_data
 
 def load_util_data(root_dir):
@@ -137,12 +143,12 @@ def calculate_and_plot_time_statistics(basins_dir, countries):
     for country in countries:
         country_dir = os.path.join(basins_dir, f'CAMELS_spat_{country}')
         basin_ids, start_dates, end_dates, total_time_lengths = calculate_time_stats(country_dir)
-        time_stats[country] = {'Station_id': basin_ids, 'Start Dates': start_dates, 'End Dates': end_dates, 'Total Time Lengths (Years)': total_time_lengths}
+        time_stats[country] = {'Station_id': basin_ids, 'Start_date': start_dates, 'End_date': end_dates, 'Total_years': total_time_lengths}
     
     # Extract data for plotting
-    start_dates_data = [time_stats[country]['Start Dates'] for country in countries]
-    end_dates_data = [time_stats[country]['End Dates'] for country in countries]
-    total_time_lengths_data = [time_stats[country]['Total Time Lengths (Years)'] for country in countries]
+    start_dates_data = [time_stats[country]['Start_date'] for country in countries]
+    end_dates_data = [time_stats[country]['End_date'] for country in countries]
+    total_time_lengths_data = [time_stats[country]['Total_years'] for country in countries]
 
     # Plot histograms for start dates
     plot_time_statistics(start_dates_data, countries, 'Start Dates', 'Year')
@@ -151,18 +157,18 @@ def calculate_and_plot_time_statistics(basins_dir, countries):
     plot_time_statistics(end_dates_data, countries, 'End Dates', 'Year')
 
     # Plot histograms for total time lengths (in years)
-    plot_time_statistics(total_time_lengths_data, countries, 'Total Time Lengths (Years)', 'Total Time Length (Years)')
+    plot_time_statistics(total_time_lengths_data, countries, 'Total Time Lengths (Years)', 'Number of years)')
     
     # Save time_stats to a csv file for each country (joined)
     all_time_stats_df = pd.concat([pd.DataFrame(time_stats[country]).assign(Country=country) for country in countries], ignore_index=True)
     all_time_stats_df = all_time_stats_df.sort_values(by=['Country', 'Station_id'])  # Sort by country and then by Station_id
     # Reorder columns with 'Country' as the first column
     all_time_stats_df = all_time_stats_df[['Country'] + [col for col in all_time_stats_df.columns if col != 'Country']]
+    # Add 'Start_decade' and 'End_decade' columns
+    all_time_stats_df['Start_decade'] = all_time_stats_df['Start_date'].apply(lambda x: math.floor(x.year / 10) * 10)
+    all_time_stats_df['End_decade'] = all_time_stats_df['End_date'].apply(lambda x: math.floor(x.year / 10) * 10)
     # Save to CSV with the specified file name
     all_time_stats_df.to_csv(os.path.join(basins_dir, f'camels_spat_{len(all_time_stats_df)}_dates_stats.csv'), index=False)
-    
-
-    
     
     return time_stats
 
