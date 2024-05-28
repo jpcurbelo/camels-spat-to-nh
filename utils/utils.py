@@ -71,7 +71,10 @@ def get_unusable_basins(input_files_dir, unusable_file):
     unusuable_basins_df = pd.read_csv(os.path.join(input_files_dir, unusable_file))
     # # Country + '_' Station_id
     # unusuable_basins = ['_'.join((row['Country'], str(row['Station_id']))) for _, row in unusuable_basins_df.iterrows()]
-    
+
+    # Filter by 'No discharge values available ...' in Reason column
+    unusuable_basins_df = unusuable_basins_df[unusuable_basins_df['Reason'].str.contains('No discharge values available', case=False)]
+
     # Station_id
     unusuable_basins = [str(row['Station_id']) for _, row in unusuable_basins_df.iterrows()]
     

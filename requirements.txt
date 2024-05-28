@@ -15,5 +15,5 @@ xarray==2023.1.0
 h5netcdf
 scipy
 matplotlib
-geopandas
+# geopandas
 seaborn

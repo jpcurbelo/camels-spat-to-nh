@@ -8,7 +8,7 @@ camels_spat_dates_stats: camels_spat_1426_dates_stats.csv
 
 data_sources:
   - ERA5
-  - EM-Earth
+  - EM_Earth
 
 input_vars:
   - prcp
