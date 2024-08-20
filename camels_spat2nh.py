@@ -2,8 +2,8 @@ import os
 import sys
 import xarray as xr
 import pandas as pd
-import yaml
 import time
+from functools import reduce
 
 from functools import partial
 import concurrent.futures
@@ -17,7 +17,8 @@ current_dir = os.getcwd()
 ROOT_DIR = os.path.abspath(current_dir)
 sys.path.append(ROOT_DIR)
 
-MULTIPROCESSING = True
+MULTIPROCESSING = 1
+ONLY_TESTING = 0
 
 FILTER_BY_CYRIL = True
 
@@ -33,6 +34,10 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
     basin_data_path = os.path.join(data_dir_src, 'basin_data')
     list_basin_files = sorted(os.listdir(basin_data_path))
 
+    # Input data
+    input_vars = data_gen['input_vars']
+    # Get the input variables that appear repeatedly
+    input_vars_repeated = set([var for var in input_vars if input_vars.count(var) > 1])
 
     # Drop if file already exists
     for basin_f in list_basin_files[:]:
@@ -58,22 +63,23 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
     for country in countries:
         basin_data_path_dict[country] = [basin for basin in list_basin_files if basin[:3] == country]
 
-    # # Filtering by cyril basins
-    # if FILTER_BY_CYRIL:
-    #     cyril_list = get_cyril_basins()
-    # else:
-    #     cyril_list = None
+    # ## Do not delete unless you know what you are doing
+    # # # Filtering by cyril basins
+    # # if FILTER_BY_CYRIL:
+    # #     cyril_list = get_cyril_basins()
+    # # else:
+    # #     cyril_list = None
 
-    # print('Cyril basins:', len(cyril_list))
-    # print(cyril_list[:5])
-    # print(cyril_list[-5:])
+    # # print('Cyril basins:', len(cyril_list))
+    # # print(cyril_list[:5])
+    # # print(cyril_list[-5:])
 
-    # return
+    # # return
 
     ## Process data for each basin and save to csv file
     for country in countries[:]:
         # Create a folder for each country
-        country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}')
+        country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}_{len(data_sources)}sources')
         if not os.path.exists(country_dir ):
             os.makedirs(country_dir)
         
@@ -81,7 +87,8 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
 
             print(f"Processing {country}...")
 
-            with concurrent.futures.ProcessPoolExecutor() as executor:
+            max_workers = int(os.environ.get('SLURM_CPUS_PER_TASK', 32))
+            with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
                 # Define a partial function with fixed non-iterable arguments       
                 partial_process = partial(processBasinSave2CSV, basin_data_path=basin_data_path, 
                                     country_dir=country_dir, 
@@ -89,7 +96,8 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
                                     relative_path_targ=relative_path_targ, 
                                     data_sources=data_sources, 
                                     data_gen=data_gen, 
-                                    unusuable_basins=unusuable_basins)
+                                    unusuable_basins=unusuable_basins,
+                                    input_vars_repeated=input_vars_repeated)
 
                 # Process each basin concurrently
                 futures = [executor.submit(partial_process, basin_f) for basin_f in basin_data_path_dict[country]]
@@ -104,12 +112,15 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
         else:
             for basin_f in basin_data_path_dict[country]:
                 processBasinSave2CSV(basin_f, basin_data_path, country_dir, relative_path_forc, 
-                                     relative_path_targ, data_sources, data_gen, unusuable_basins)
+                                     relative_path_targ, data_sources, data_gen, unusuable_basins, input_vars_repeated)
                                   
 def processBasinSave2CSV(basin_f, basin_data_path, country_dir, 
                          relative_path_forc, relative_path_targ, 
                          data_sources, data_gen, unusuable_basins,
+                         input_vars_repeated,
                          cyril_list=None):
+
+    print(f"Let's try {basin_f}...")
             
     basin_id = basin_f.split('_')[-1]
     csv_file_name = os.path.join(country_dir, basin_f + '.csv')
@@ -124,12 +135,17 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
         print('\n', basin_f[:3], '->', basin_id)
         df_src_dict = {}
         for src in data_sources:
+
             folder2load = os.path.join(basin_data_path, basin_f, relative_path_forc)
             # print('folder2load', folder2load)
             eras_files = sorted([f for f in os.listdir(folder2load) if src in f])
 
             print(f'{src}_files', len(eras_files), '->', folder2load)
             
+            # Check if only testing
+            if ONLY_TESTING:
+                continue
+
             # Check whether there are files to load
             if len(eras_files) == 0:
                 continue
@@ -137,7 +153,7 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
             # Initialize an empty list to store the xarray datasets
             datasets = []
             # Iterate over the files and load each dataset
-            for file2load in eras_files[:]:
+            for file2load in eras_files:   ### [:5] for testing
                 
                 # If not .temp file
                 if '.tmp' not in file2load:
@@ -153,23 +169,48 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
                 
             # Reduce basin_data to daily values
             basin_data_reduced = reduceDataByDay(concatenated_dataset, data_gen['input_vars'], 
-                                                data_gen['sum_vars'])
+                                                data_gen['sum_vars'], input_vars_repeated, src.lower())
             # Convert the reduced basin_data to a DataFrame, dropping the 'hru' dimension
             basin_data_df = basin_data_reduced.to_dataframe().droplevel('hru').reset_index()
-            
+
+            print('basin_data_df', basin_data_df.head())
+           
             # Save to dict
             df_src_dict[src] = basin_data_df
                   
+        
+        # Check if only testing
+        if ONLY_TESTING:
+            return None
+
         print('basin', basin_f, '->', df_src_dict.keys())
-        # Check if there are two data sources in df_src_dict.keys() (expected ERA5 and EM_EARTH)
-        if len(df_src_dict.keys()) == 2:
-            # Merge dataframes in the dictionary
-            df_merged_inp = df_src_dict[data_sources[0]].merge(df_src_dict[data_sources[1]], on='time')
+        # Check if there are len(data_sources) data sources in df_src_dict.keys() (expected ERA5, EM_EARTH, daymet, and RDRS)
+
+        # if len(df_src_dict.keys()) == len(data_sources):
+        #     # Merge dataframes in the dictionary
+        #     df_merged_inp = df_src_dict[data_sources[0]].merge(df_src_dict[data_sources[1]], on='time')
+        # elif len(df_src_dict.keys()) == 1:
+        #     df_merged_inp = df_src_dict[list(df_src_dict.keys())[0]]
+
+        if len(df_src_dict.keys()) == len(data_sources):
+            # Dynamically merge all dataframes in the dictionary based on the 'time' column using an outer join
+            df_merged_inp = reduce(lambda left, right: pd.merge(left, right, on='time', how='outer'), 
+                                [df_src_dict[src] for src in data_sources])
         elif len(df_src_dict.keys()) == 1:
             df_merged_inp = df_src_dict[list(df_src_dict.keys())[0]]
-        
+        else:
+            raise ValueError("The number of data sources does not match the keys in the dictionary.")
+                        
         # Rename time by date
         df_merged_inp.rename(columns={'time': 'date'}, inplace=True)
+
+        # print('df_merged_inp', df_merged_inp.head())
+        # # Print data_vars
+        # for var in df_merged_inp.columns:
+        #     print(var)
+        #     if var not in data_gen['input_vars']:
+        #         print('Variable not in inputs:', var)
+        # aux = input('Enter to continue')
         
         ## Load target data
         target_data = xr.open_dataset(os.path.join(basin_data_path, basin_f, relative_path_targ, 
@@ -186,6 +227,15 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
         
         # Merge input and target dataframes
         df_merged = df_merged_inp.merge(df_target, on='date')
+
+
+        # print('df_merged', df_merged_inp.head())
+        # # Print data_vars
+        # for var in df_merged.columns:
+        #     print(var)
+        #     if var not in data_gen['input_vars']:
+        #         print('Variable not in inputs:', var)
+        # aux = input('Enter to continue')
         
         # Save to file
         print("Saving to file...", os.path.join(country_dir, basin_id + '.csv'))
@@ -201,13 +251,9 @@ def get_cyril_basins():
     cyril_list = [line[4:].strip() for line in cyril_list]
     return cyril_list
 
-
-
-
 if __name__ == '__main__':
     
-
-    # camels_spat2nh()
+    # Load data
     data_dir, data_gen = load_util_data(ROOT_DIR)
     
     # Load Unusable basins

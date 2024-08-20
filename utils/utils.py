@@ -6,13 +6,14 @@ import matplotlib.pyplot as plt
 import math
 
 
-def reduceDataByDay(dataset, set_vars, sum_vars):
+def reduceDataByDay(dataset, set_vars, sum_vars, input_vars_repeated, forcing_src):
     '''
     Reduce the input dataset to daily frequency
     Args:
         dataset: xarray.Dataset, input dataset
         set_vars: list, variables to be averaged
         sum_vars: list, variables to be summed
+        input_vars_repeated: list, variables that appear repeatedly
     Returns:
         daily_data: xarray.Dataset, dataset with daily frequency
     '''
@@ -23,18 +24,49 @@ def reduceDataByDay(dataset, set_vars, sum_vars):
 
     # Group by day and apply appropriate reduction method for each variable
     daily_data = xr.Dataset()
+
+    # Calculate the difference between consecutive time points
+    time_diff = dataset['time'].diff(dim='time')
+    # Convert the differences to a pandas timedelta for easier analysis
+    time_diff_timedelta = time_diff.to_pandas()
+    # Get the most common frequency
+    inferred_frequency = time_diff_timedelta.mode()[0]
+
     for variable in dataset.data_vars:
-        if variable in sum_vars:
-            # print('sum', variable)
-            daily_data[variable] = dataset[variable].groupby(day_dates).sum(dim="time")
-        elif variable in set_vars:
-            # print('mean', variable)
-            daily_data[variable] = dataset[variable].groupby(day_dates).mean(dim="time")
+
+        if variable in input_vars_repeated:
+            var = f'{variable}_{forcing_src}'
+        else:
+            var = variable
+
+        # Check if the frequency is daily - daymet
+        if inferred_frequency == pd.Timedelta(days=1) and variable in variable in set_vars:
+            # Do not aggregate
+            daily_data[var] = dataset[variable]
+        else:
+            if variable in sum_vars:
+                # print('sum', variable)
+                daily_data[var] = dataset[variable].groupby(day_dates).sum(dim="time")
+            elif variable in set_vars:
+                # print('mean', variable)
+                daily_data[var] = dataset[variable].groupby(day_dates).mean(dim="time")
         
         # Add max and min temperature
-        if variable == 'tmean' or variable == 't':
-            daily_data[f'{variable}_max'] = dataset[variable].groupby(day_dates).max(dim="time")
-            daily_data[f'{variable}_min'] = dataset[variable].groupby(day_dates).min(dim="time")
+        if variable == 'tmean':
+            daily_data[f'{var}_max'] = dataset[variable].groupby(day_dates).max(dim="time")
+            daily_data[f'{var}_min'] = dataset[variable].groupby(day_dates).min(dim="time")
+        elif variable == 't':
+            daily_data[f'{var}_max_{forcing_src}'] = dataset[variable].groupby(day_dates).max(dim="time")
+            daily_data[f'{var}_min_{forcing_src}'] = dataset[variable].groupby(day_dates).min(dim="time")
+
+    # print('daily_data', daily_data)
+    # # Print Data variables
+    # # See if any data_vars are not in set_vars or sum_vars
+    # for var in daily_data.data_vars:
+    #     print(var)
+    #     if var not in set_vars:
+    #         print('Variable not in daily_data:', var)
+    # aux = input('Enter to continue')
             
     return daily_data
 
@@ -77,7 +109,6 @@ def get_unusable_basins(input_files_dir, unusable_file):
 
     # Station_id
     unusuable_basins = [str(row['Station_id']) for _, row in unusuable_basins_df.iterrows()]
-    
     
     return set(unusuable_basins)
 

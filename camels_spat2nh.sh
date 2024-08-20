@@ -4,7 +4,7 @@
 #SBATCH --job-name=camels_spat2nh
 #SBATCH --time=2-00:00:00
 #SBATCH --ntasks=1              
-#SBATCH --cpus-per-task=32         
+#SBATCH --cpus-per-task=32 
 #SBATCH --mem=64G
 #SBATCH --output=camels_spat2nh-%j.out
  

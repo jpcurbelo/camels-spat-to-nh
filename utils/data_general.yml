@@ -1,7 +1,7 @@
 countries:
-  - CAN
   - USA
-  
+  - CAN
+
 camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv
 camels_spat_dates_stats: camels_spat_1426_dates_stats.csv
@@ -9,25 +9,59 @@ camels_spat_dates_stats: camels_spat_1426_dates_stats.csv
 data_sources:
   - ERA5
   - EM_Earth
+  - RDRS
+  - daymet
 
 input_vars:
-  - prcp
-  - tmean
-  - mtpr
-  - msdwswrf
-  - msdwlwrf
-  - msnswrf
-  - msnlwrf
-  - mper
-  - t
-  - u
-  - v
-  - q
-  - sp
-  - e
-  - rh
-  - w
-  - phi
+  - prcp      #EM_Earth
+  - tmean     #EM_Earth
+  - mtpr      #ERA5
+  - msdwswrf  #ERA5
+  - msdwlwrf  #ERA5
+  - msnswrf   #ERA5
+  - msnlwrf   #ERA5
+  - mper      #ERA5
+  - t         #ERA5
+  - u         #ERA5
+  - v         #ERA5
+  - q         #ERA5
+  - sp        #ERA5
+  - e         #ERA5
+  - rh        #ERA5
+  - w         #ERA5
+  - phi       #ERA5
+  - RDRS_v2.1_A_PR0_SFC   #RDRS
+  # # Data Variables in RDRS: ['latitude', 'longitude', 'hruId', 'RDRS_v2.1_A_PR0_SFC', 'RDRS_v2.1_P_FB_SFC', 
+  # #'RDRS_v2.1_P_FI_SFC', 'RDRS_v2.1_P_GZ_SFC', 'RDRS_v2.1_P_HR_1.5m', 'RDRS_v2.1_P_HU_1.5m', 'RDRS_v2.1_P_P0_SFC', 
+  # #'RDRS_v2.1_P_TT_1.5m', 'RDRS_v2.1_P_UUC_10m', 'RDRS_v2.1_P_UVC_10m', 'RDRS_v2.1_P_VVC_10m', 'e', 'pet', 'time_bnds', 'phi
+  - RDRS_v2.1_P_FB_SFC   #RDRS
+  - RDRS_v2.1_P_FI_SFC   #RDRS
+  - RDRS_v2.1_P_GZ_SFC   #RDRS
+  - RDRS_v2.1_P_HR_1.5m  #RDRS
+  - RDRS_v2.1_P_HU_1.5m  #RDRS
+  - RDRS_v2.1_P_P0_SFC   #RDRS
+  - RDRS_v2.1_P_TT_1.5m  #RDRS
+  - RDRS_v2.1_P_UUC_10m  #RDRS
+  - RDRS_v2.1_P_UVC_10m  #RDRS
+  - RDRS_v2.1_P_VVC_10m  #RDRS
+  - e         #RDRS
+  - pet       #RDRS
+  - phi       #RDRS
+  # # - q_obs     #observations
+  # # - q_obs_is_ice_affected #observations
+  # # - q_obs_is_partial_day #observations
+  # # - q_obs_is_dry_day #observations
+  # # - q_obs_is_estimated_value #observations
+
+  # # Data Variables in daymet: ['latitude', 'longitude', 'hruId', 'prcp', 'tmax', 'tmin', 
+  # #'srad', 'vp', 'dayl', 'pet', 'time_bnds']
+  - prcp      #daymet
+  - tmax      #daymet
+  - tmin      #daymet
+  - srad      #daymet 
+  - vp        #daymet
+  - dayl      #daymet
+  - pet       #daymet
 
 target_vars:
   - q_obs
@@ -41,3 +75,4 @@ sum_vars:
   - prcp
   - mtpr
   - q_obs
+  
