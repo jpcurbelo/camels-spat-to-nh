@@ -22,6 +22,8 @@ def reduceDataByDay(dataset, set_vars, sum_vars, input_vars_repeated, forcing_sr
     day_dates = pd.to_datetime(dataset.coords["time"].values).normalize()
     day_dates = xr.DataArray(day_dates, name="time", dims="time")
 
+    print('day_dates', day_dates)
+
     # Group by day and apply appropriate reduction method for each variable
     daily_data = xr.Dataset()
 
@@ -41,8 +43,8 @@ def reduceDataByDay(dataset, set_vars, sum_vars, input_vars_repeated, forcing_sr
 
         # Check if the frequency is daily - daymet
         if inferred_frequency == pd.Timedelta(days=1) and variable in variable in set_vars:
-            # Do not aggregate
-            daily_data[var] = dataset[variable]
+            # Do not aggregate and bring to the day dimension: 1980-01-01 12:00:00 to be 1980-01-01
+            daily_data[var] = dataset[variable].assign_coords(time=day_dates)
         else:
             if variable in sum_vars:
                 # print('sum', variable)

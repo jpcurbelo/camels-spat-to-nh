@@ -4,10 +4,6 @@ data_dir_camels_spat: /project/gwf/gwf_cmt/wknoben/camels_spat/camels-spat-data
 relative_path_forcing: forcing/lumped
 relative_path_target: observations
 
-# countries:
-  # - USA
-  # - CAN
-
 camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv
 

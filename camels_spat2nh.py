@@ -79,7 +79,12 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
     ## Process data for each basin and save to csv file
     for country in countries[:]:
         # Create a folder for each country
-        country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}_{len(data_sources)}sources')
+        # Check if only testing
+        if ONLY_TESTING:
+            country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}_testing')
+        else:
+            country_dir = os.path.join(data_dir_out, f'CAMELS_spat_{country}_{len(data_sources)}sources')
+            
         if not os.path.exists(country_dir ):
             os.makedirs(country_dir)
         
@@ -142,9 +147,9 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
 
             print(f'{src}_files', len(eras_files), '->', folder2load)
             
-            # Check if only testing
-            if ONLY_TESTING:
-                continue
+            # # Check if only testing
+            # if ONLY_TESTING:
+            #     continue
 
             # Check whether there are files to load
             if len(eras_files) == 0:
@@ -179,9 +184,9 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
             df_src_dict[src] = basin_data_df
                   
         
-        # Check if only testing
-        if ONLY_TESTING:
-            return None
+        # # Check if only testing
+        # if ONLY_TESTING:
+        #     return None
 
         print('basin', basin_f, '->', df_src_dict.keys())
         # Check if there are len(data_sources) data sources in df_src_dict.keys() (expected ERA5, EM_EARTH, daymet, and RDRS)
@@ -224,12 +229,14 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
         df_target.rename(columns={'time': 'date'}, inplace=True)
         # Remove duplicates
         df_target = df_target.drop_duplicates(subset=['date'])
+
+        # print('df_target', df_target.head())
         
         # Merge input and target dataframes
         df_merged = df_merged_inp.merge(df_target, on='date')
 
 
-        # print('df_merged', df_merged_inp.head())
+        # print('df_merged', df_merged.head())
         # # Print data_vars
         # for var in df_merged.columns:
         #     print(var)
