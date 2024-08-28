@@ -1,6 +1,7 @@
 countries:
   - USA
   - CAN
+  # - USA
 
 camels_spat_metadata: camels_spat_metadata.csv
 camels_spat_unusable: camels_spat_unusable.csv

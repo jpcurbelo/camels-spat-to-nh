@@ -7,6 +7,7 @@
 #SBATCH --cpus-per-task=32 
 #SBATCH --mem=64G
 #SBATCH --output=camels_spat2nh-%j.out
+#SBATCH --error=camels_spat2nh-%j.err
  
 module load python/3.11.5
 

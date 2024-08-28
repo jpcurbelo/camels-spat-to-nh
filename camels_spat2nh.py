@@ -17,7 +17,8 @@ current_dir = os.getcwd()
 ROOT_DIR = os.path.abspath(current_dir)
 sys.path.append(ROOT_DIR)
 
-MULTIPROCESSING = 1
+MULTIPROCESSING = 0
+MAX_WORKERS = int(os.environ.get('SLURM_CPUS_PER_TASK', 32))
 ONLY_TESTING = 0
 
 FILTER_BY_CYRIL = True
@@ -42,12 +43,12 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
     # Drop if file already exists
     for basin_f in list_basin_files[:]:
         # Check if file exists
-        csv_file_name = os.path.join(data_dir_out, f'CAMELS_spat_{basin_f[0:3]}', basin_f[4:] + '.csv')
-        if os.path.exists(csv_file_name):
-            print(f"File {csv_file_name} already exists")
+        csv_file_path = os.path.join(data_dir_out, f'CAMELS_spat_{basin_f[0:3]}', basin_f[4:] + '.csv')
+        if os.path.exists(csv_file_path):
+            print(f"File {csv_file_path} already exists")
             if basin_f[4:] in unusuable_basins:
                 # Delete file
-                os.remove(csv_file_name)
+                os.remove(csv_file_path)
 
             # Remove from list
             list_basin_files.remove(basin_f)
@@ -91,9 +92,7 @@ def camels_spat2nh(data_dir, data_gen, unusuable_basins):
         if MULTIPROCESSING:
 
             print(f"Processing {country}...")
-
-            max_workers = int(os.environ.get('SLURM_CPUS_PER_TASK', 32))
-            with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
+            with concurrent.futures.ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
                 # Define a partial function with fixed non-iterable arguments       
                 partial_process = partial(processBasinSave2CSV, basin_data_path=basin_data_path, 
                                     country_dir=country_dir, 
@@ -128,12 +127,15 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
     print(f"Let's try {basin_f}...")
             
     basin_id = basin_f.split('_')[-1]
-    csv_file_name = os.path.join(country_dir, basin_f + '.csv')
-    if os.path.exists(csv_file_name):
-        print(f"File {csv_file_name} already exists")
+    csv_file_path = os.path.join(country_dir, basin_id + '.csv')
+
+    print('csv_file_path', csv_file_path, os.path.exists(csv_file_path))
+
+    if os.path.exists(csv_file_path):
+        print(f"File {csv_file_path} already exists")
         if basin_f[4:] in unusuable_basins:
             # Delete file
-            os.remove(csv_file_name)               
+            os.remove(csv_file_path)               
     elif basin_f[4:] in unusuable_basins:
         print(f"Skipping basin {basin_f} - unusable basin")
     else:
@@ -245,8 +247,10 @@ def processBasinSave2CSV(basin_f, basin_data_path, country_dir,
         # aux = input('Enter to continue')
         
         # Save to file
-        print("Saving to file...", os.path.join(country_dir, basin_id + '.csv'))
-        df_merged.to_csv(os.path.join(country_dir, basin_f[4:] + '.csv'), index=False)
+        # print("Saving to file...", os.path.join(country_dir, basin_id + '.csv'))
+        # df_merged.to_csv(os.path.join(country_dir, basin_f[4:] + '.csv'), index=False)
+        print("Saving to file...", csv_file_path)
+        df_merged.to_csv(csv_file_path, index=False)
 
 def get_cyril_basins():
 
